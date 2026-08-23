@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>郑强龙 · 随便记录点啥</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500&family=Noto+Sans+SC:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* === Design System Tokens === */
+:root {
+  --color-bg: #FAF9F7;
+  --color-surface: #FFFFFF;
+  --color-ink: #1A1A18;
+  --color-ink-2: #5F5E5A;
+  --color-accent: #1F5C4C;
+  --color-accent-soft: #E1F5EE;
+  --color-border: #D3D1C7;
+  --color-border-strong: #B4B2A9;
+
+  --font-display: 'Noto Serif SC', 'Songti SC', serif;
+  --font-body: 'Noto Sans SC', 'PingFang SC', sans-serif;
+
+  --space-1: 8px;  --space-2: 16px; --space-3: 24px;
+  --space-4: 32px; --space-5: 48px; --space-6: 72px;
+
+  --radius-sm: 4px; --radius-md: 8px; --radius-lg: 12px;
+
+  --text-xs: 12px; --text-sm: 14px; --text-base: 16px;
+  --text-lg: 20px; --text-xl: 28px; --text-2xl: 36px;
+
+  --content-max: 680px;
+}
+
+/* === Reset === */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* === Layout === */
+.container { max-width: var(--content-max); margin: 0 auto; padding: 0 var(--space-3); }
+
+/* === Header === */
+.site-header { border-bottom: 1px solid var(--color-border); padding: var(--space-3) 0; }
+.header-inner { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); flex-wrap: wrap; }
+.site-name { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 500; color: var(--color-ink); text-decoration: none; }
+.site-name:hover { color: var(--color-accent); }
+.main-nav { display: flex; gap: var(--space-3); }
+.main-nav a { font-size: var(--text-sm); color: var(--color-ink-2); text-decoration: none; padding: 8px 4px; min-height: 44px; display: inline-flex; align-items: center; transition: color 0.2s ease; }
+.main-nav a:hover { color: var(--color-accent); text-decoration: underline; text-underline-offset: 4px; }
+.main-nav a:active { color: var(--color-ink); }
+.main-nav a:focus-visible, a:focus-visible, .tag:focus-visible, .footer-link:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; border-radius: var(--radius-sm); }
+
+/* === Intro === */
+.intro { padding: var(--space-6) 0 var(--space-5); }
+.intro h1 { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 500; color: var(--color-ink); letter-spacing: 0.02em; }
+.intro .sub { margin-top: var(--space-2); font-size: var(--text-base); color: var(--color-ink-2); }
+
+/* === Quote === */
+.quote { margin: 0 0 var(--space-5); padding: var(--space-4); background: var(--color-surface); border: 1px solid var(--color-border); border-left: 3px solid var(--color-accent); border-radius: var(--radius-md); }
+.quote blockquote { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 400; color: var(--color-ink); line-height: 1.6; }
+.quote .quote-meta { margin-top: var(--space-1); font-size: var(--text-xs); color: var(--color-ink-2); }
+
+/* === Timeline === */
+.timeline { padding-bottom: var(--space-6); }
+#timeline-loading, #timeline-error { font-size: var(--text-sm); color: var(--color-ink-2); padding: var(--space-4) 0; }
+.entry { padding: var(--space-3); margin-bottom: var(--space-4); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); transition: background-color 0.2s ease; }
+.entry:hover { background: var(--color-accent-soft); }
+.entry-date { display: inline-block; font-family: var(--font-display); font-size: var(--text-lg); font-weight: 500; color: var(--color-accent); margin-bottom: var(--space-2); padding-bottom: 6px; border-bottom: 2px solid var(--color-accent); }
+.entry p { font-size: var(--text-base); color: var(--color-ink); }
+.entry .tags { margin-top: var(--space-2); }
+
+/* === Tags === */
+.tags { display: flex; gap: var(--space-1); flex-wrap: wrap; }
+.tag { font-size: var(--text-xs); color: var(--color-ink-2); background: var(--color-bg); border: 1px solid var(--color-border-strong); border-radius: var(--radius-sm); padding: 4px 10px; text-decoration: none; min-height: 32px; display: inline-flex; align-items: center; transition: background-color 0.2s ease, color 0.2s ease; }
+.tag:hover { background: var(--color-accent); color: #fff; border-color: var(--color-accent); }
+.tag:active { transform: translateY(1px); }
+@media (max-width: 768px) { .tag { min-height: 44px; padding: 8px 12px; } }
+
+/* === Section heading === */
+.section-title { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 500; color: var(--color-ink); margin: var(--space-5) 0 var(--space-3); }
+
+/* === Footer === */
+.site-footer { border-top: 1px solid var(--color-border); padding: var(--space-4) 0 var(--space-5); display: flex; flex-direction: column; gap: var(--space-2); }
+.footer-links { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+.footer-link { font-size: var(--text-sm); color: var(--color-ink-2); text-decoration: none; }
+.footer-link:hover { color: var(--color-accent); }
+.footer-link:active { color: var(--color-ink); }
+.footer-note { font-size: var(--text-xs); color: var(--color-ink-2); }
+
+/* === Responsive === */
+@media (max-width: 768px) {
+  .header-inner { flex-direction: column; align-items: flex-start; }
+  .intro h1 { font-size: var(--text-xl); }
+  .quote blockquote { font-size: var(--text-lg); }
+}
+
+/* === Reduced Motion === */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="site-name" id="site-name" href="#top">郑强龙 · 随便记录点啥</a>
+    <nav class="main-nav" aria-label="主导航">
+      <a href="#recent">最近</a>
+      <a href="#about">关于</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container" id="top">
+
+  <section class="intro" aria-labelledby="intro-title">
+    <h1 id="intro-title">随便记录点啥</h1>
+    <p class="sub" id="intro-sub">产品经理 · 量化交易 · AI 内容创作。这里是我自己的角落，记日常、记想法、记碎碎念。</p>
+  </section>
+
+  <aside class="quote" aria-label="当前想法">
+    <blockquote id="quote-text">慢慢来，比较快。</blockquote>
+    <div class="quote-meta" id="quote-meta">—— 想通的一句话 · 2026.08.20</div>
+  </aside>
+
+  <section class="timeline" id="recent" aria-label="时间流">
+    <h2 class="section-title">最近</h2>
+    <div id="timeline-loading">正在加载日记…</div>
+    <div id="timeline-error" role="alert" hidden>日记加载失败，请稍后再试。</div>
+    <div id="timeline"></div>
+  </section>
+
+  <section class="intro" id="about" aria-labelledby="about-title">
+    <h2 class="section-title" id="about-title">关于</h2>
+    <p class="sub" id="about-text"></p>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-links" id="footer-links"></div>
+    <p class="footer-note">© 2026 郑强龙 · 随便记录点啥</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  var siteData = {
+    name: '郑强龙 · 随便记录点啥',
+    intro: '产品经理 · 量化交易 · AI 内容创作。这里是我自己的角落，记日常、记想法、记碎碎念。',
+    quote: '慢慢来，比较快。',
+    quoteMeta: '—— 想通的一句话 · 2026.08.20',
+    about: '郑强龙，坐标合肥。白天做企业数字化产品（整车合同、销售预测、售后、渠道平台），晚上折腾量化交易和自己的 AI 内容小生意。这个站点就记这些。',
+    footer: [
+      { label: '公众号 · 地球美男子聊AI', url: '#' },
+      { label: '小红书', url: '#' },
+      { label: '邮箱', url: 'mailto:357445825@qq.com' }
+    ]
+  };
+
+  var postsData = [
+    { date: '2026.08.23', weekday: '周日', content: '今天把小龙虾·智能交易工作台的重构跑通了，交易模拟的部分终于能连上真实行情接口。挺开心的，这种「把想做的事一点点做出来」的感觉，比上班还爽。', tags: ['量化', '工作台'] },
+    { date: '2026.08.22', weekday: '周六', content: '小红书的数据又涨了一点，发现还是「情绪向」的内容吃香。猎奇 + 情绪的搭配，涨粉确实比纯干货快。数据说明一切，继续跑。', tags: ['AI创作', '小红书'] },
+    { date: '2026.08.21', weekday: '周五', content: '想通了一件事：很多焦虑都来自「想要的东西太多、能同时推进的事太少」。与其列一堆计划，不如每天只把最重要的一两件事做完。所以有了上面那句「慢慢来，比较快」。', tags: ['想法'] },
+    { date: '2026.08.18', weekday: '周二', content: '在 DeepWay 跟团队对齐 DCP 渠道平台的需求，发现大家对「销售预测」的颗粒度理解完全不一样。这种认知差，往往才是项目延期真正的原因，而不是排期。', tags: ['工作', 'CRM'] },
+    { date: '2026.08.16', weekday: '周日', content: '尾盘猎手又改了个 bug——回测和历史数据对不齐，查了半天是时区问题。量化这条路上，90% 的时间都在跟这种小坑搏斗，剩下 10% 才是策略本身。', tags: ['量化', '尾盘猎手'] }
+  ];
+
+  var SITE = siteData;
+  var POSTS = postsData;
+
+  function render() {
+    var nameEl = document.getElementById('site-name');
+    var introEl = document.getElementById('intro-sub');
+    var quoteEl = document.getElementById('quote-text');
+    var quoteMetaEl = document.getElementById('quote-meta');
+    var aboutEl = document.getElementById('about-text');
+    var footerEl = document.getElementById('footer-links');
+    var timelineEl = document.getElementById('timeline');
+    var loadingEl = document.getElementById('timeline-loading');
+
+    if (nameEl) nameEl.textContent = SITE.name;
+    if (introEl) introEl.textContent = SITE.intro;
+    if (quoteEl) quoteEl.textContent = SITE.quote;
+    if (quoteMetaEl) quoteMetaEl.textContent = SITE.quoteMeta;
+    if (aboutEl) aboutEl.textContent = SITE.about;
+
+    if (footerEl) {
+      footerEl.innerHTML = '';
+      SITE.footer.forEach(function (item) {
+        var a = document.createElement('a');
+        a.className = 'footer-link';
+        a.href = item.url;
+        a.textContent = item.label;
+        footerEl.appendChild(a);
+      });
+    }
+
+    if (timelineEl) {
+      timelineEl.innerHTML = '';
+      POSTS.forEach(function (post) {
+        var article = document.createElement('article');
+        article.className = 'entry';
+
+        var time = document.createElement('time');
+        time.className = 'entry-date';
+        time.setAttribute('datetime', post.date);
+        time.textContent = post.date + ' · ' + post.weekday;
+
+        var p = document.createElement('p');
+        p.textContent = post.content;
+
+        article.appendChild(time);
+        article.appendChild(p);
+
+        if (post.tags && post.tags.length) {
+          var tags = document.createElement('div');
+          tags.className = 'tags';
+          post.tags.forEach(function (tag) {
+            var a = document.createElement('a');
+            a.className = 'tag';
+            a.href = '#';
+            a.textContent = tag;
+            tags.appendChild(a);
+          });
+          article.appendChild(tags);
+        }
+
+        timelineEl.appendChild(article);
+      });
+    }
+
+    if (loadingEl) loadingEl.hidden = true;
+    document.title = SITE.name;
+  }
+
+  function loadData() {
+    fetch('posts.json')
+      .then(function (res) { if (!res.ok) throw new Error('load failed'); return res.json(); })
+      .then(function (data) {
+        if (data && data.site) SITE = data.site;
+        if (data && data.posts) POSTS = data.posts;
+        render();
+      })
+      .catch(function () {
+        render();
+      });
+  }
+
+  loadData();
+})();
+</script>
+</body>
+</html>
