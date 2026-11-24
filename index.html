@@ -417,25 +417,27 @@ a:focus-visible,
     return tags;
   }
 
+  function isSectionHash(hash) {
+    return hash === 'top' || hash === 'recent' || hash === 'about';
+  }
+
+  function syncSearchInput() {
+    var input = document.getElementById('search-input');
+    if (input && input.value !== searchQuery) input.value = searchQuery;
+  }
+
   function readStateFromHash() {
     var hash = window.location.hash.replace(/^#/, '');
-    if (!hash || hash === 'top' || hash === 'recent' || hash === 'about') {
-      activeTag = '';
-      return;
-    }
-    var params = new URLSearchParams(hash.indexOf('=') >= 0 || hash.indexOf('&') >= 0 ? hash : '');
-    var tag = params.get('tag');
-    var q = params.get('q');
-    if (tag) activeTag = tag;
-    if (q != null) {
-      searchQuery = q;
-      var input = document.getElementById('search-input');
-      if (input) input.value = q;
-    }
-    if (!tag && !params.has('q') && hash && hash.indexOf('=') < 0) {
-      // legacy: #量化 style is not used; ignore section anchors
-      activeTag = '';
-    }
+    // Section anchors only scroll; keep in-memory filters as-is.
+    if (isSectionHash(hash)) return;
+
+    var params = new URLSearchParams(
+      hash && (hash.indexOf('=') >= 0 || hash.indexOf('&') >= 0) ? hash : ''
+    );
+    // Always assign both from the URL so omitted params clear previous state.
+    activeTag = params.get('tag') || '';
+    searchQuery = params.get('q') || '';
+    syncSearchInput();
   }
 
   function writeStateToHash() {
@@ -444,10 +446,10 @@ a:focus-visible,
     if (searchQuery) params.set('q', searchQuery);
     var next = params.toString();
     var current = window.location.hash.replace(/^#/, '');
-    if (current === 'about' || current === 'recent' || current === 'top') return;
+    // Filter changes may replace a section anchor so the URL stays shareable.
     if (next) {
       if (current !== next) history.replaceState(null, '', '#' + next);
-    } else if (current.indexOf('tag=') >= 0 || current.indexOf('q=') >= 0) {
+    } else if (current && !isSectionHash(current)) {
       history.replaceState(null, '', window.location.pathname + window.location.search);
     }
   }
@@ -673,7 +675,7 @@ a:focus-visible,
   bindControls();
   window.addEventListener('hashchange', function () {
     var hash = window.location.hash.replace(/^#/, '');
-    if (hash === 'about' || hash === 'recent' || hash === 'top') return;
+    if (isSectionHash(hash)) return;
     readStateFromHash();
     renderFilterBar();
     renderTimeline();
