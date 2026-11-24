@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>郑强龙 · 随便记录点啥</title>
+<meta name="description" content="产品经理 · 量化交易 · AI 内容创作。郑强龙的个人记录：日常、想法与碎碎念。">
+<meta name="author" content="郑强龙">
+<meta property="og:type" content="website">
+<meta property="og:title" content="郑强龙 · 随便记录点啥">
+<meta property="og:description" content="产品经理 · 量化交易 · AI 内容创作。这里是我自己的角落，记日常、记想法、记碎碎念。">
+<meta property="og:locale" content="zh_CN">
+<meta name="theme-color" content="#1F5C4C">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231F5C4C'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='16' fill='%23FAF9F7' font-family='serif'%3Ez%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500&family=Noto+Sans+SC:wght@400;500&display=swap" rel="stylesheet">
@@ -11,6 +19,7 @@
 /* === Design System Tokens === */
 :root {
   --color-bg: #FAF9F7;
+  --color-bg-deep: #F0EEE8;
   --color-surface: #FFFFFF;
   --color-ink: #1A1A18;
   --color-ink-2: #5F5E5A;
@@ -31,25 +40,39 @@
   --text-lg: 20px; --text-xl: 28px; --text-2xl: 36px;
 
   --content-max: 680px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* === Reset === */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
-  background: var(--color-bg);
+  background:
+    radial-gradient(ellipse 80% 50% at 10% -10%, rgba(31, 92, 76, 0.08), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(31, 92, 76, 0.05), transparent 50%),
+    linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-deep) 100%);
+  background-attachment: fixed;
   color: var(--color-ink);
   font-family: var(--font-body);
   font-size: var(--text-base);
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
 }
 
 /* === Layout === */
 .container { max-width: var(--content-max); margin: 0 auto; padding: 0 var(--space-3); }
 
 /* === Header === */
-.site-header { border-bottom: 1px solid var(--color-border); padding: var(--space-3) 0; }
+.site-header {
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--space-3) 0;
+  background: rgba(250, 249, 247, 0.85);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
 .header-inner { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); flex-wrap: wrap; }
 .site-name { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 500; color: var(--color-ink); text-decoration: none; }
 .site-name:hover { color: var(--color-accent); }
@@ -57,36 +80,186 @@ body {
 .main-nav a { font-size: var(--text-sm); color: var(--color-ink-2); text-decoration: none; padding: 8px 4px; min-height: 44px; display: inline-flex; align-items: center; transition: color 0.2s ease; }
 .main-nav a:hover { color: var(--color-accent); text-decoration: underline; text-underline-offset: 4px; }
 .main-nav a:active { color: var(--color-ink); }
-.main-nav a:focus-visible, a:focus-visible, .tag:focus-visible, .footer-link:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; border-radius: var(--radius-sm); }
+.main-nav a:focus-visible,
+a:focus-visible,
+.tag:focus-visible,
+.footer-link:focus-visible,
+.filter-chip:focus-visible,
+.search-input:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
 
 /* === Intro === */
 .intro { padding: var(--space-6) 0 var(--space-5); }
-.intro h1 { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 500; color: var(--color-ink); letter-spacing: 0.02em; }
-.intro .sub { margin-top: var(--space-2); font-size: var(--text-base); color: var(--color-ink-2); }
+.intro h1 {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 500;
+  color: var(--color-ink);
+  letter-spacing: 0.02em;
+  animation: rise-in 0.7s var(--ease-out) both;
+}
+.intro .sub {
+  margin-top: var(--space-2);
+  font-size: var(--text-base);
+  color: var(--color-ink-2);
+  animation: rise-in 0.7s var(--ease-out) 0.08s both;
+}
 
 /* === Quote === */
-.quote { margin: 0 0 var(--space-5); padding: var(--space-4); background: var(--color-surface); border: 1px solid var(--color-border); border-left: 3px solid var(--color-accent); border-radius: var(--radius-md); }
+.quote {
+  margin: 0 0 var(--space-5);
+  padding: var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-accent);
+  border-radius: var(--radius-md);
+  animation: rise-in 0.7s var(--ease-out) 0.14s both;
+}
 .quote blockquote { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 400; color: var(--color-ink); line-height: 1.6; }
 .quote .quote-meta { margin-top: var(--space-1); font-size: var(--text-xs); color: var(--color-ink-2); }
 
+/* === Controls === */
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+  animation: rise-in 0.7s var(--ease-out) 0.18s both;
+}
+.search-row { position: relative; }
+.search-input {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-ink);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 12px 14px 12px 40px;
+  min-height: 44px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.search-input::placeholder { color: var(--color-ink-2); }
+.search-input:hover { border-color: var(--color-border-strong); }
+.search-input:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(31, 92, 76, 0.12);
+  outline: none;
+}
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  color: var(--color-ink-2);
+  pointer-events: none;
+}
+.filter-bar {
+  display: flex;
+  gap: var(--space-1);
+  flex-wrap: wrap;
+  align-items: center;
+}
+.filter-label {
+  font-size: var(--text-xs);
+  color: var(--color-ink-2);
+  margin-right: 4px;
+}
+.filter-chip {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  color: var(--color-ink-2);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  min-height: 32px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.filter-chip:hover { background: var(--color-accent-soft); color: var(--color-accent); border-color: var(--color-accent); }
+.filter-chip.is-active {
+  background: var(--color-accent);
+  color: #fff;
+  border-color: var(--color-accent);
+}
+.results-meta {
+  font-size: var(--text-xs);
+  color: var(--color-ink-2);
+  min-height: 1.2em;
+}
+
 /* === Timeline === */
 .timeline { padding-bottom: var(--space-6); }
-#timeline-loading, #timeline-error { font-size: var(--text-sm); color: var(--color-ink-2); padding: var(--space-4) 0; }
-.entry { padding: var(--space-3); margin-bottom: var(--space-4); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); transition: background-color 0.2s ease; }
-.entry:hover { background: var(--color-accent-soft); }
-.entry-date { display: inline-block; font-family: var(--font-display); font-size: var(--text-lg); font-weight: 500; color: var(--color-accent); margin-bottom: var(--space-2); padding-bottom: 6px; border-bottom: 2px solid var(--color-accent); }
+#timeline-loading, #timeline-error, #timeline-empty {
+  font-size: var(--text-sm);
+  color: var(--color-ink-2);
+  padding: var(--space-4) 0;
+}
+.entry {
+  padding: var(--space-3);
+  margin-bottom: var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  transition: background-color 0.2s ease, transform 0.25s var(--ease-out), border-color 0.2s ease;
+  animation: rise-in 0.55s var(--ease-out) both;
+}
+.entry:hover {
+  background: var(--color-accent-soft);
+  border-color: rgba(31, 92, 76, 0.28);
+  transform: translateY(-2px);
+}
+.entry-date {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 500;
+  color: var(--color-accent);
+  margin-bottom: var(--space-2);
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--color-accent);
+}
 .entry p { font-size: var(--text-base); color: var(--color-ink); }
 .entry .tags { margin-top: var(--space-2); }
+.mark {
+  background: rgba(31, 92, 76, 0.28);
+  color: var(--color-ink);
+  border-radius: 2px;
+  padding: 0 2px;
+}
 
 /* === Tags === */
 .tags { display: flex; gap: var(--space-1); flex-wrap: wrap; }
-.tag { font-size: var(--text-xs); color: var(--color-ink-2); background: var(--color-bg); border: 1px solid var(--color-border-strong); border-radius: var(--radius-sm); padding: 4px 10px; text-decoration: none; min-height: 32px; display: inline-flex; align-items: center; transition: background-color 0.2s ease, color 0.2s ease; }
+.tag {
+  font-size: var(--text-xs);
+  color: var(--color-ink-2);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+  text-decoration: none;
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
 .tag:hover { background: var(--color-accent); color: #fff; border-color: var(--color-accent); }
 .tag:active { transform: translateY(1px); }
-@media (max-width: 768px) { .tag { min-height: 44px; padding: 8px 12px; } }
+.tag.is-active { background: var(--color-accent); color: #fff; border-color: var(--color-accent); }
+@media (max-width: 768px) {
+  .tag, .filter-chip { min-height: 44px; padding: 8px 12px; }
+}
 
 /* === Section heading === */
 .section-title { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 500; color: var(--color-ink); margin: var(--space-5) 0 var(--space-3); }
+.timeline .section-title { margin-top: 0; }
 
 /* === Footer === */
 .site-footer { border-top: 1px solid var(--color-border); padding: var(--space-4) 0 var(--space-5); display: flex; flex-direction: column; gap: var(--space-2); }
@@ -95,6 +268,12 @@ body {
 .footer-link:hover { color: var(--color-accent); }
 .footer-link:active { color: var(--color-ink); }
 .footer-note { font-size: var(--text-xs); color: var(--color-ink-2); }
+
+/* === Motion === */
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
 /* === Responsive === */
 @media (max-width: 768px) {
@@ -106,7 +285,11 @@ body {
 /* === Reduced Motion === */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  *, *::before, *::after { transition: none !important; }
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .entry:hover { transform: none; }
 }
 </style>
 </head>
@@ -136,8 +319,30 @@ body {
 
   <section class="timeline" id="recent" aria-label="时间流">
     <h2 class="section-title">最近</h2>
+
+    <div class="controls" id="controls" hidden>
+      <div class="search-row">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
+          <path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <label class="visually-hidden" for="search-input" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0;">搜索日记</label>
+        <input
+          id="search-input"
+          class="search-input"
+          type="search"
+          placeholder="搜索日记内容…"
+          autocomplete="off"
+          enterkeyhint="search"
+        >
+      </div>
+      <div class="filter-bar" id="filter-bar" role="toolbar" aria-label="按标签筛选"></div>
+      <p class="results-meta" id="results-meta" aria-live="polite"></p>
+    </div>
+
     <div id="timeline-loading">正在加载日记…</div>
     <div id="timeline-error" role="alert" hidden>日记加载失败，请稍后再试。</div>
+    <div id="timeline-empty" hidden>没有找到匹配的日记。</div>
     <div id="timeline"></div>
   </section>
 
@@ -173,6 +378,7 @@ body {
   };
 
   var postsData = [
+    { date: '2026.11.24', weekday: '周二', content: '把这个日记站又打磨了一轮：标签能筛选了，内容能搜索了，地址栏还能带着筛选状态分享出去。还是那句话——慢慢来，比较快。', tags: ['想法', '站点'] },
     { date: '2026.08.23', weekday: '周日', content: '今天把小龙虾·智能交易工作台的重构跑通了，交易模拟的部分终于能连上真实行情接口。挺开心的，这种「把想做的事一点点做出来」的感觉，比上班还爽。', tags: ['量化', '工作台'] },
     { date: '2026.08.22', weekday: '周六', content: '小红书的数据又涨了一点，发现还是「情绪向」的内容吃香。猎奇 + 情绪的搭配，涨粉确实比纯干货快。数据说明一切，继续跑。', tags: ['AI创作', '小红书'] },
     { date: '2026.08.21', weekday: '周五', content: '想通了一件事：很多焦虑都来自「想要的东西太多、能同时推进的事太少」。与其列一堆计划，不如每天只把最重要的一两件事做完。所以有了上面那句「慢慢来，比较快」。', tags: ['想法'] },
@@ -182,85 +388,298 @@ body {
 
   var SITE = siteData;
   var POSTS = postsData;
+  var activeTag = '';
+  var searchQuery = '';
+  var searchTimer = null;
 
-  function render() {
+  function toIsoDate(dateStr) {
+    if (!dateStr) return '';
+    var m = String(dateStr).match(/^(\d{4})[.\-\/](\d{1,2})[.\-\/](\d{1,2})$/);
+    if (!m) return '';
+    return m[1] + '-' + m[2].padStart(2, '0') + '-' + m[3].padStart(2, '0');
+  }
+
+  function escapeRegExp(s) {
+    return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  function collectTags(posts) {
+    var seen = Object.create(null);
+    var tags = [];
+    posts.forEach(function (post) {
+      (post.tags || []).forEach(function (tag) {
+        if (!seen[tag]) {
+          seen[tag] = true;
+          tags.push(tag);
+        }
+      });
+    });
+    return tags;
+  }
+
+  function isSectionHash(hash) {
+    return hash === 'top' || hash === 'recent' || hash === 'about';
+  }
+
+  function syncSearchInput() {
+    var input = document.getElementById('search-input');
+    if (input && input.value !== searchQuery) input.value = searchQuery;
+  }
+
+  function readStateFromHash() {
+    var hash = window.location.hash.replace(/^#/, '');
+    // Section anchors only scroll; keep in-memory filters as-is.
+    if (isSectionHash(hash)) return;
+
+    var params = new URLSearchParams(
+      hash && (hash.indexOf('=') >= 0 || hash.indexOf('&') >= 0) ? hash : ''
+    );
+    // Always assign both from the URL so omitted params clear previous state.
+    activeTag = params.get('tag') || '';
+    searchQuery = params.get('q') || '';
+    syncSearchInput();
+  }
+
+  function writeStateToHash() {
+    var params = new URLSearchParams();
+    if (activeTag) params.set('tag', activeTag);
+    if (searchQuery) params.set('q', searchQuery);
+    var next = params.toString();
+    var current = window.location.hash.replace(/^#/, '');
+    // Filter changes may replace a section anchor so the URL stays shareable.
+    if (next) {
+      if (current !== next) history.replaceState(null, '', '#' + next);
+    } else if (current && !isSectionHash(current)) {
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+  }
+
+  function setActiveTag(tag) {
+    activeTag = activeTag === tag ? '' : tag;
+    writeStateToHash();
+    renderTimeline();
+    renderFilterBar();
+  }
+
+  function filteredPosts() {
+    var q = searchQuery.trim().toLowerCase();
+    return POSTS.filter(function (post) {
+      if (activeTag && !(post.tags || []).includes(activeTag)) return false;
+      if (!q) return true;
+      var hay = (post.content || '') + ' ' + (post.tags || []).join(' ') + ' ' + (post.date || '');
+      return hay.toLowerCase().indexOf(q) >= 0;
+    });
+  }
+
+  function highlightText(text, query) {
+    var q = query.trim();
+    if (!q) return document.createTextNode(text);
+    var re = new RegExp('(' + escapeRegExp(q) + ')', 'ig');
+    var parts = String(text).split(re);
+    var frag = document.createDocumentFragment();
+    parts.forEach(function (part, i) {
+      if (i % 2 === 1) {
+        var mark = document.createElement('mark');
+        mark.className = 'mark';
+        mark.textContent = part;
+        frag.appendChild(mark);
+      } else if (part) {
+        frag.appendChild(document.createTextNode(part));
+      }
+    });
+    return frag;
+  }
+
+  function renderSite() {
     var nameEl = document.getElementById('site-name');
     var introEl = document.getElementById('intro-sub');
     var quoteEl = document.getElementById('quote-text');
     var quoteMetaEl = document.getElementById('quote-meta');
     var aboutEl = document.getElementById('about-text');
     var footerEl = document.getElementById('footer-links');
-    var timelineEl = document.getElementById('timeline');
-    var loadingEl = document.getElementById('timeline-loading');
 
     if (nameEl) nameEl.textContent = SITE.name;
     if (introEl) introEl.textContent = SITE.intro;
     if (quoteEl) quoteEl.textContent = SITE.quote;
     if (quoteMetaEl) quoteMetaEl.textContent = SITE.quoteMeta;
     if (aboutEl) aboutEl.textContent = SITE.about;
+    document.title = SITE.name;
+
+    var desc = document.querySelector('meta[name="description"]');
+    if (desc && SITE.intro) desc.setAttribute('content', SITE.intro);
 
     if (footerEl) {
       footerEl.innerHTML = '';
-      SITE.footer.forEach(function (item) {
+      (SITE.footer || []).forEach(function (item) {
+        if (!item || !item.label) return;
         var a = document.createElement('a');
         a.className = 'footer-link';
-        a.href = item.url;
+        a.href = item.url || '#';
         a.textContent = item.label;
+        if (item.url && item.url.indexOf('http') === 0) {
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+        }
         footerEl.appendChild(a);
       });
     }
+  }
 
-    if (timelineEl) {
-      timelineEl.innerHTML = '';
-      POSTS.forEach(function (post) {
-        var article = document.createElement('article');
-        article.className = 'entry';
+  function renderFilterBar() {
+    var bar = document.getElementById('filter-bar');
+    if (!bar) return;
+    bar.innerHTML = '';
 
-        var time = document.createElement('time');
-        time.className = 'entry-date';
-        time.setAttribute('datetime', post.date);
-        time.textContent = post.date + ' · ' + post.weekday;
+    var label = document.createElement('span');
+    label.className = 'filter-label';
+    label.textContent = '标签';
+    bar.appendChild(label);
 
-        var p = document.createElement('p');
-        p.textContent = post.content;
+    var allBtn = document.createElement('button');
+    allBtn.type = 'button';
+    allBtn.className = 'filter-chip' + (activeTag ? '' : ' is-active');
+    allBtn.textContent = '全部';
+    allBtn.setAttribute('aria-pressed', activeTag ? 'false' : 'true');
+    allBtn.addEventListener('click', function () {
+      activeTag = '';
+      writeStateToHash();
+      renderTimeline();
+      renderFilterBar();
+    });
+    bar.appendChild(allBtn);
 
-        article.appendChild(time);
-        article.appendChild(p);
+    collectTags(POSTS).forEach(function (tag) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'filter-chip' + (activeTag === tag ? ' is-active' : '');
+      btn.textContent = tag;
+      btn.setAttribute('aria-pressed', activeTag === tag ? 'true' : 'false');
+      btn.addEventListener('click', function () { setActiveTag(tag); });
+      bar.appendChild(btn);
+    });
+  }
 
-        if (post.tags && post.tags.length) {
-          var tags = document.createElement('div');
-          tags.className = 'tags';
-          post.tags.forEach(function (tag) {
-            var a = document.createElement('a');
-            a.className = 'tag';
-            a.href = '#';
-            a.textContent = tag;
-            tags.appendChild(a);
-          });
-          article.appendChild(tags);
-        }
+  function renderTimeline() {
+    var timelineEl = document.getElementById('timeline');
+    var emptyEl = document.getElementById('timeline-empty');
+    var metaEl = document.getElementById('results-meta');
+    if (!timelineEl) return;
 
-        timelineEl.appendChild(article);
-      });
+    var list = filteredPosts();
+    timelineEl.innerHTML = '';
+
+    if (metaEl) {
+      if (activeTag || searchQuery.trim()) {
+        metaEl.textContent = '共 ' + list.length + ' 条' +
+          (activeTag ? ' · 标签「' + activeTag + '」' : '') +
+          (searchQuery.trim() ? ' · 关键词「' + searchQuery.trim() + '」' : '');
+      } else {
+        metaEl.textContent = '共 ' + list.length + ' 条记录';
+      }
     }
 
+    if (emptyEl) emptyEl.hidden = list.length > 0;
+    if (!list.length) return;
+
+    list.forEach(function (post, index) {
+      var article = document.createElement('article');
+      article.className = 'entry';
+      article.style.animationDelay = Math.min(index, 8) * 0.04 + 's';
+
+      var time = document.createElement('time');
+      time.className = 'entry-date';
+      var iso = toIsoDate(post.date);
+      if (iso) time.setAttribute('datetime', iso);
+      time.textContent = post.date + (post.weekday ? ' · ' + post.weekday : '');
+
+      var p = document.createElement('p');
+      p.appendChild(highlightText(post.content || '', searchQuery));
+
+      article.appendChild(time);
+      article.appendChild(p);
+
+      if (post.tags && post.tags.length) {
+        var tags = document.createElement('div');
+        tags.className = 'tags';
+        post.tags.forEach(function (tag) {
+          var a = document.createElement('a');
+          a.className = 'tag' + (activeTag === tag ? ' is-active' : '');
+          a.href = '#tag=' + encodeURIComponent(tag);
+          a.textContent = tag;
+          a.addEventListener('click', function (e) {
+            e.preventDefault();
+            setActiveTag(tag);
+            var recent = document.getElementById('recent');
+            if (recent) recent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          });
+          tags.appendChild(a);
+        });
+        article.appendChild(tags);
+      }
+
+      timelineEl.appendChild(article);
+    });
+  }
+
+  function render() {
+    var loadingEl = document.getElementById('timeline-loading');
+    var controlsEl = document.getElementById('controls');
     if (loadingEl) loadingEl.hidden = true;
-    document.title = SITE.name;
+    if (controlsEl) controlsEl.hidden = false;
+    renderSite();
+    renderFilterBar();
+    renderTimeline();
+  }
+
+  function bindControls() {
+    var input = document.getElementById('search-input');
+    if (!input) return;
+    input.addEventListener('input', function () {
+      var value = input.value;
+      if (searchTimer) clearTimeout(searchTimer);
+      searchTimer = setTimeout(function () {
+        searchQuery = value;
+        writeStateToHash();
+        renderTimeline();
+      }, 160);
+    });
   }
 
   function loadData() {
-    fetch('posts.json')
-      .then(function (res) { if (!res.ok) throw new Error('load failed'); return res.json(); })
+    var loadingEl = document.getElementById('timeline-loading');
+    var errorEl = document.getElementById('timeline-error');
+    fetch('posts.json', { cache: 'no-cache' })
+      .then(function (res) {
+        if (!res.ok) throw new Error('load failed');
+        return res.json();
+      })
       .then(function (data) {
         if (data && data.site) SITE = data.site;
-        if (data && data.posts) POSTS = data.posts;
+        if (data && Array.isArray(data.posts)) POSTS = data.posts;
+        if (errorEl) errorEl.hidden = true;
         render();
       })
       .catch(function () {
+        if (errorEl) {
+          errorEl.hidden = false;
+          errorEl.textContent = '未能读取 posts.json，已显示内置备份内容。';
+        }
         render();
+      })
+      .finally(function () {
+        if (loadingEl) loadingEl.hidden = true;
       });
   }
 
+  readStateFromHash();
+  bindControls();
+  window.addEventListener('hashchange', function () {
+    var hash = window.location.hash.replace(/^#/, '');
+    if (isSectionHash(hash)) return;
+    readStateFromHash();
+    renderFilterBar();
+    renderTimeline();
+  });
   loadData();
 })();
 </script>
